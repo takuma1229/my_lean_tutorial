@@ -56,3 +56,27 @@ def G : Type -> Type -> Type := Prod
 
 #check α × β -- Type。直積×はType → Type → Type型を持つ関数である。
 #check Nat × Nat
+
+def α : Type := Nat
+#check List α -- 任意の型αが与えられたとき、List αはα型の項からなるListの型を返す。
+#check List Nat
+
+#check Type -- Q. Typeそのものはどのような型をもっているのか？ A. Type 1型
+
+#check Type 1 -- Type 1はType 2型を持つ。
+#check Type 2 -- Type 2はType 3型を持つ。
+
+-- Type 0はNatのような普通の型からなる宇宙。また、TypeとはType 0の略称である。
+-- Type 1はType 0を項に持つ、より大きい宇宙。
+-- Type 2はType 1を項にもつ、より大きい宇宙。
+-- 以下無限に続く。任意の自然数nに対して型Type nが存在する。
+
+#check List -- List.{u} (α : Type u) : Type u。uは宇宙レベルを表す。αがType nをもつなら、List αもType nを持つ。
+#check Prod -- 関数Prodも多相 (polymorphic)である。
+
+universe u -- universeコマンドで明示的に宇宙変数を宣言できる。
+def F2 (α : Type u) : Type u := Prod α α -- Type uに属する型αを受け取ると、αとαの直積型を返す関数
+#check F2
+
+def F3.{u2} (α : Type u2) : Type u2 := Prod α α -- {}を用いて宇宙パラメータを指定すると、universeコマンドの使用を回避できる
+#check F3
